@@ -1,0 +1,95 @@
+<?php
+session_start();
+if(!isset($_SESSION["email"])){
+    header("location: ../index.html");
+}
+if($_SESSION["pic"] != "defulte.jpg"){
+	header("location: index.html");
+}
+
+include '../conn.php';
+$uid = $_SESSION["uid"];
+$email = $_SESSION["email"];
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile Pic</title>
+	<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="container white-text">
+  <div class="row valign-wrapper">
+    <div class="col s6 offset-s3 valign">
+      <div class="card black darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">Seems like You Have No Profile Picture, Well Set It</span>
+      		<form action="" method="post" enctype="multipart/form-data">
+      					<div class="file-field input-field">
+					      <div class="btn white black-text">
+					        <span>File</span>
+					        <input type="file" name="filetoupload" id="fileToUpload" accept="image/*">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+					    <button class="btn waves-effect waves-light white black-text" type="submit"   name="submit">Upload
+            			           <i class="material-icons right">cloud_upload</i>
+                           </button>
+
+                           
+      		</form>	
+      			</div>
+      		</div>
+  		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+        
+</body>
+</html>
+<?php
+if(isset($_POST["submit"])){
+// check if image is selected or not
+	if(empty($_FILES["filetoupload"]["name"])){
+		echo '<script type="text/javascript">
+			window.alert("No Image Is Selected");
+		</script>';
+		exit();
+	}
+$dir = "propic/";
+$uppic = basename($_FILES["filetoupload"]["name"]);
+$pic = $dir.basename($_FILES["filetoupload"]["name"]);
+$type = strtolower(pathinfo($pic,PATHINFO_EXTENSION));
+			if(($type != "jpg") && ($type != "jpeg") && ($type != "gif") && ($type != "png")){
+				echo '<script type="text/javascript">
+					window.alert("Image Type is Not Supported, Please Try With jpg, jpeg, gif or png Type of Images");
+				</script>';
+				exit();
+			}
+			if(move_uploaded_file($_FILES["filetoupload"]["tmp_name"], $pic)){
+				// update database with new pic name 
+				$sql = "UPDATE pharmainfo SET pic = '$uppic' WHERE pharmainfo.email = '$email'";
+					if (mysqli_query($conn, $sql)) {
+					  
+					    $_SESSION["pic"] = $uppic;
+					    header("location: index.html");
+					}
+
+			}
+
+}
+?>

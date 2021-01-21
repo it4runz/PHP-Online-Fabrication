@@ -1,0 +1,334 @@
+<?php
+include "../conn.php";
+session_start();
+if(isset($_SESSION["email"])){
+  $auth = "ok";
+ $uid = $_SESSION['uid'];
+
+}
+if(!isset($_SESSION["name"])){
+    $_SESSION['title'] = "Home";
+}
+else{
+    $_SESSION['title'] = $_SESSION["name"];
+    $name = $_SESSION["name"];
+}
+
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title> <?php echo $_SESSION["title"]; ?> || Page</title>
+    
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+
+    $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+    
+    function validate() {
+      var x = document.getElementById('search').value;
+      var len = x.length;
+      if(len >= 3){
+        document.getElementById("Button").disabled = false;
+      }else{
+        document.getElementById("Button").disabled = true;
+      }
+    
+    }
+
+</script>
+<style type="text/css">
+  .tales {
+  width: 100%;
+}
+.carousel-inner{
+  width:100%;
+  max-height: 380px !important;
+}
+.well {
+    background: #111 !important;
+  }
+  .well a{
+    color: white !important;
+    font-weight: bold !important;
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-inverse ">
+    <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Fabrication Wala</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      <li><a href="#" class="btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#my"> <span class="glyphicon glyphicon-envelope" ></span> Contact US</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <?php 
+    if(!empty($auth)){
+      $pic = $_SESSION["pic"];
+      if(!isset($name)){
+      $name = "Welcome";
+    }
+    echo '
+    <li><a href="request.php"><span class="glyphicon glyphicon-leaf"></span> Requests</a></li>
+    <li><a href="#" class="btn" data-toggle="modal" data-target="#update"><span class="glyphicon glyphicon-user"></span> '.$name.'</a></li>
+    <li><a href="../logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+  ';}
+  else{echo '
+      <li><a href="../reg.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="../index.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  ';
+}
+  ?>  
+  </div>
+</nav>
+
+
+
+
+<div class="container">
+
+  
+
+<div class="row well well-sm">
+  <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Gate, Section Window, Aleuminum Window." data-placement="bottom">Forging</a>
+  </div>
+   <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content" data-placement="bottom">Stamping</a>
+  </div>
+   <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content" data-placement="bottom">Hand Tools</a>
+  </div>
+   <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content" data-placement="bottom">Cutlery</a>
+  </div>
+   <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content" data-placement="bottom">Structural Metals</a>
+  </div>
+   <div class="col-md-2">
+    <a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content" data-placement="bottom">Boilers Tanks </a>
+  </div>
+</div>
+
+ <form action="search.php">
+<div class="row">
+  <div class="form-group">
+      <div class="input-group">
+       
+        <span class="input-group-btn">
+          <button class="btn btn-info input-lg" type="submit" id="Button">Search</button>
+        </span>
+        <input type="text" class="form-control input-lg" placeholder="Iteam Name" id="search" name="q" onkeyup="validate()">
+
+      </div>
+  </div>
+ 
+</div>
+ </form>
+<div class="row">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Iimgndicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="slider/img3.jpg" alt="Los Angeles" style="width: 100%;">
+
+    </div>
+
+    <div class="item">
+      <img src="slider/img2.jpg" alt="Chicago" style="width: 100%;">
+    </div>
+
+    <div class="item">
+       <img src="slider/img1.jpg" alt="Chicago" style="width: 100%;">
+    </div>
+  </div>
+<h1></h1>
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+</div>
+
+  <div class="row">
+   <?php
+    $sql ="SELECT * FROM `item_info`";
+    if($result = mysqli_query($conn, $sql)){
+    while($row = mysqli_fetch_assoc($result)){ 
+   echo '
+      <div class="col-md-3">
+        <img src="img/'.$row['item_img'].'" width="290" height="290"><h2>'.$row['item_name'].'</h2>
+        <h4>'.$row['item_sp'].' Rs</h4>
+        <a href="see.php?item='.@$row[item_no].'" class="btn btn-success">Add to cart</a>
+      </div>
+      
+      ';
+    }
+  }
+  ?>
+  
+  </div>
+
+
+  
+<!--Container end  -->
+</div>
+
+<div style="margin: 100px;"></div>
+    
+
+<!-- modal  for about us-->
+<div class="container">
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">About Us</h4>
+        </div>
+        <div class="modal-body">
+          <p>Fabrication Wala is an e-Commerce platform that provide vivide range of products with dynamic range</p>
+          <p>Please Look out at out Web application</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<!-- modal  for Contact us-->
+<div class="container">
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="my" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contact Us</h4>
+        </div>
+        <div class="modal-body">
+          <p><span class="glyphicon glyphicon-envelope" ></span>  :  info@fabricationwala.com</p>
+          <p><span class="glyphicon glyphicon-earphone" > </span>  : +91 xxxxxxxxxx</p>
+          <p><span class="glyphicon glyphicon-map-marker" > </span>  : Address here</p>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+<div class="modal fade" id="update" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+    
+    <form action="" method="post">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><?php  echo $_SESSION['name']; ?></h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="email">
+                    Email Address: 
+                </label>
+                <input type="email" value="<?php echo $_SESSION['email']; ?>" disabled="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    First Name: 
+                </label>
+                <input type="text" value="<?php echo $_SESSION['fname']; ?>" name="fname" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Last Name: 
+                </label>
+                <input type="text" value="<?php echo $_SESSION['lname']; ?>" name="lname" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Address: 
+                </label>
+                <textarea type="email" name="address" class="form-control"><?php echo $_SESSION['address']; ?></textarea>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="Update" class="btn btn-info">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </form> 
+    </div>
+  </div>
+
+</body>
+</html>
+<?php
+if(isset($_POST['Update'])){
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $address = $_POST['address'];
+    $sql = "UPDATE `pharmainfo` SET fname='$fname', lname='$lname', address='$address' WHERE `uid` = '$uid'";
+    $result = mysqli_query($conn, $sql);
+    echo '<script type="text/javascript">
+        alert("You Have To login Again to Save Changes");
+    </script>';
+    session_destroy();
+
+
+}
+?>
